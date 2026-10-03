@@ -7,6 +7,7 @@ import re
 import shutil
 import hashlib
 import stat
+from datetime import datetime
 from collections import defaultdict
 from pathlib import Path
 
@@ -23,6 +24,7 @@ DUP_MIN_FILE_SIZE = 4096
 DUP_CHUNK_SIZE = 65536
 DUP_DIRS_VERIFY_CONTENT = True
 DUP_DIRS_HASH_ALGO = "md5"
+PROJECT_DUP_THRESHOLD = 0.50  # Minimum similarity to flag project duplicates
 
 PROJECT_MARKERS = {
     ".sln", "CMakeLists.txt", "pom.xml", "vcxproj", "project.pbxproj",
@@ -90,6 +92,210 @@ def get_hash(filepath, algorithm="md5"):
                 break
             h.update(chunk)
     return h.hexdigest()
+
+
+def get_project_fingerprint(dirpath):
+    """Compute three-layer fingerprint for a project directory.
+    
+    Layer 1: Root structure (Jaccard similarity on base names)
+    Layer 2: Extension distribution (cosine similarity)
+    Layer 3: Identity signals (marker-derived name, language signature, marker types)
+    """
+    try:
+        entries = os.listdir(dirpath)
+    except PermissionError:
+        return None
+    
+    # Layer 1: Root structure - base names of files and dirs at project root
+    root_base_names = set()
+    for name in entries:
+        if os.path.isfile(os.path.join(dirpath, name)):
+            base = os.path.splitext(name)[0]
+            root_base_names.add(base)
+        elif os.path.isdir(os.path.join(dirpath, name)):
+            root_base_names.add(name)
+    
+    # Layer 2: Extension distribution at project root
+    ext_counts = defaultdict(int)
+    total_files = 0
+    for name in entries:
+        fpath = os.path.join(dirpath, name)
+        if os.path.isfile(fpath):
+            _, ext = os.path.splitext(name)
+            ext = ext.lower()
+            if ext:
+                ext_counts[ext] += 1
+                total_files += 1
+    
+    # Normalize to percentages
+    ext_dist = {}
+    if total_files > 0:
+        for ext, count in ext_counts.items():
+            ext_dist[ext] = count / total_files
+    
+    # Layer 3: Identity signals
+    identity = {
+        'name': None,
+        'languages': set(),
+        'markers': set()
+    }
+    
+    # Extract project name from marker files
+    for marker in ['package.json', 'Cargo.toml', 'setup.py', 'setup.cfg', 
+                   'pyproject.toml', 'CMakeLists.txt', 'pom.xml']:
+        marker_path = os.path.join(dirpath, marker)
+        if os.path.isfile(marker_path):
+            try:
+                with open(marker_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+                    # Try to extract name from JSON
+                    if marker == 'package.json':
+                        import json
+                        try:
+                            data = json.loads(content)
+                            identity['name'] = data.get('name', None)
+                        except json.JSONDecodeError:
+                            pass
+                    # For TOML, look for name = ...
+                    elif marker in ['Cargo.toml', 'setup.cfg', 'pyproject.toml']:
+                        for line in content.split('\n'):
+                            if '=' in line and 'name' in line.lower():
+                                parts = line.split('=')
+                                if len(parts) >= 2:
+                                    val = parts[-1].strip().strip('"').strip("'")
+                                    if val and not identity['name']:
+                                        identity['name'] = val
+                    break
+            except (PermissionError, OSError):
+                pass
+    
+    # If no name found in markers, use directory name
+    if not identity['name']:
+        identity['name'] = os.path.basename(dirpath)
+    
+    # Language signature - check for source files at root
+    for name in entries:
+        fpath = os.path.join(dirpath, name)
+        if os.path.isfile(fpath):
+            _, ext = os.path.splitext(name)
+            if ext in SOURCE_CODE_EXTS:
+                identity['languages'].add(ext)
+    
+    # Marker types present
+    for marker in PROJECT_MARKERS:
+        if marker in entries or (marker == '.git' and '.git' in entries):
+            identity['markers'].add(marker)
+    
+    return {
+        'layer1': root_base_names,
+        'layer2': ext_dist,
+        'layer3': identity
+    }
+
+
+def compute_project_similarity(fp_a, fp_b):
+    """Compute similarity between two project fingerprints (0.0 to 1.0)."""
+    if not fp_a or not fp_b:
+        return 0.0
+    
+    # Layer 1: Jaccard similarity of root base names
+    set_a = fp_a['layer1']
+    set_b = fp_b['layer1']
+    if len(set_a) == 0 and len(set_b) == 0:
+        layer1_sim = 1.0
+    else:
+        intersection = len(set_a & set_b)
+        union = len(set_a | set_b)
+        layer1_sim = intersection / union if union > 0 else 0.0
+    
+    # Layer 2: Cosine similarity of extension distributions
+    ext_a = fp_a['layer2']
+    ext_b = fp_b['layer2']
+    all_exts = set(ext_a.keys()) | set(ext_b.keys())
+    if len(all_exts) == 0:
+        layer2_sim = 1.0
+    else:
+        dot_product = sum(ext_a.get(ext, 0) * ext_b.get(ext, 0) for ext in all_exts)
+        mag_a = (sum(v**2 for v in ext_a.values())) ** 0.5
+        mag_b = (sum(v**2 for v in ext_b.values())) ** 0.5
+        if mag_a == 0 or mag_b == 0:
+            layer2_sim = 0.0
+        else:
+            layer2_sim = dot_product / (mag_a * mag_b)
+    
+    # Layer 3: Identity signals
+    id_a = fp_a['layer3']
+    id_b = fp_b['layer3']
+    
+    name_match = 1.0 if id_a['name'] and id_b['name'] and id_a['name'].lower() == id_b['name'].lower() else 0.0
+    lang_intersection = len(id_a['languages'] & id_b['languages'])
+    lang_union = len(id_a['languages'] | id_b['languages'])
+    lang_sim = lang_intersection / lang_union if lang_union > 0 else (1.0 if not id_a['languages'] and not id_b['languages'] else 0.0)
+    marker_intersection = len(id_a['markers'] & id_b['markers'])
+    marker_union = len(id_a['markers'] | id_b['markers'])
+    marker_sim = marker_intersection / marker_union if marker_union > 0 else (1.0 if not id_a['markers'] and not id_b['markers'] else 0.0)
+    
+    layer3_sim = (name_match * 0.5) + (lang_sim * 0.25) + (marker_sim * 0.25)
+    
+    # Weighted combination
+    similarity = (layer1_sim * 0.35) + (layer2_sim * 0.30) + (layer3_sim * 0.35)
+    return similarity
+
+
+def find_project_duplicates(projects_info):
+    """Find duplicate projects using three-layer fingerprint.
+    
+    Args:
+        projects_info: dict mapping project_rel_path -> {'fingerprint': fp, 'mtime': timestamp}
+    
+    Returns:
+        List of groups, each group is a list of (path, mtime, similarity) tuples
+    """
+    if len(projects_info) < 2:
+        return []
+    
+    project_pairs = []
+    paths = list(projects_info.keys())
+    
+    for i in range(len(paths)):
+        for j in range(i + 1, len(paths)):
+            path_a = paths[i]
+            path_b = paths[j]
+            fp_a = projects_info[path_a]['fingerprint']
+            fp_b = projects_info[path_b]['fingerprint']
+            
+            similarity = compute_project_similarity(fp_a, fp_b)
+            if similarity >= PROJECT_DUP_THRESHOLD:
+                project_pairs.append((path_a, path_b, similarity))
+    
+    # Group related projects
+    groups = []
+    visited = set()
+    
+    for path_a, path_b, sim in sorted(project_pairs, key=lambda x: -x[2]):
+        if path_a in visited and path_b in visited:
+            continue
+        
+        group = [path_a, path_b]
+        visited.add(path_a)
+        visited.add(path_b)
+        
+        # Check for transitive matches
+        for path_c in paths:
+            if path_c in visited:
+                continue
+            fp_c = projects_info[path_c]['fingerprint']
+            fp_a = projects_info[path_a]['fingerprint']
+            sim_ac = compute_project_similarity(fp_a, fp_c)
+            if sim_ac >= PROJECT_DUP_THRESHOLD:
+                group.append(path_c)
+                visited.add(path_c)
+        
+        # Sort by last modified time (oldest first)
+        group.sort(key=lambda p: projects_info[p]['mtime'])
+        groups.append(group)
+    
+    return groups
 
 
 def is_project_dir(dirpath):
@@ -340,6 +546,22 @@ def main():
                 ttf_system_fonts.append(os.path.join(rel_root, fname))
 
     projects_set = set(projects_found)
+    
+    # v2.3: Compute fingerprints and find project duplicates
+    print("\nComputing project fingerprints...")
+    projects_info = {}
+    for idx, proj_rel in enumerate(projects_found):
+        proj_path = os.path.join(src_dir, proj_rel)
+        fp = get_project_fingerprint(proj_path)
+        if fp:
+            mtime = os.path.getmtime(proj_path)
+            projects_info[proj_rel] = {'fingerprint': fp, 'mtime': mtime}
+            if (idx + 1) % 10 == 0:
+                print(f"  Processed {idx + 1}/{len(projects_found)} projects...")
+    
+    print(f"  Fingerprinted {len(projects_info)} projects")
+    project_dup_groups = find_project_duplicates(projects_info)
+    
     dir_dupes = find_directory_duplicates(src_dir, projects_set)
     file_dupes = find_file_duplicates(src_dir)
 
@@ -375,6 +597,36 @@ def main():
         print(f"  - {p}")
     if len(projects_found) > 20:
         print(f"  ... and {len(projects_found) - 20} more")
+
+    # v2.3: Project duplicates with fingerprint detection
+    if project_dup_groups:
+        print(f"\nPROJECT DUPLICATES (v2.3 fingerprint): {len(project_dup_groups)} groups")
+        print("  NOTE: Projects are NEVER auto-deleted — only reported, ordered by last modified.")
+        for group in project_dup_groups:
+            if len(group) >= 2:
+                # Compute average similarity within group
+                sims = []
+                for i in range(len(group)):
+                    for j in range(i+1, len(group)):
+                        fp_a = projects_info[group[i]]['fingerprint']
+                        fp_b = projects_info[group[j]]['fingerprint']
+                        sim = compute_project_similarity(fp_a, fp_b)
+                        sims.append(sim)
+                avg_sim = sum(sims) / len(sims) if sims else 0.0
+                
+                print(f"\n  Group (similarity: {avg_sim:.0%})")
+                for idx, path in enumerate(group):
+                    mtime = projects_info[path]['mtime']
+                    mod_time = datetime.fromtimestamp(mtime).strftime('%Y-%m-%d')
+                    marker = "<- OLDEST" if idx == 0 else (f"<- newer copy ({idx} copies ahead)")
+                    print(f"    * {path}")
+                    print(f"      Modified: {mod_time} {marker}")
+        
+        total_project_dupes = sum(len(g) - 1 for g in project_dup_groups)
+        print(f"\n  PROJECT DUPLICATES SUMMARY:")
+        print(f"    Groups: {len(project_dup_groups)}")
+        print(f"    Extra projects (not deleted): {total_project_dupes}")
+        print(f"    Action: None — projects are never auto-deleted")
 
     # Directory duplicates with v2.2 strategy
     if dir_dupes:
