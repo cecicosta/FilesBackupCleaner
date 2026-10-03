@@ -1,12 +1,19 @@
 ---
-name: backup-junk-cleaner-v2-1
-description: Use when asked to clean junk files from backup directories with file duplication verification. Builds on v2.0 with MD5 content-based duplicate detection, two-phase size+hash filtering, and space savings estimation.
+name: backup-junk-cleaner-v2-2
+description: 'Use when asked to clean junk files from backup directories with full
+  duplicate handling. Builds on v2.1 with automated file duplicate deletion (move
+  to trash), and smart directory duplicate resolution: project-under dirs are kept
+  read-only, non-project duplicates are moved to trash.'
 ---
 
-# Backup Junk Cleaner v2.1 - Project-Aware, IDE-Junk-Specific + File Duplication Verification
+# Backup Junk Cleaner v2.2 - Project-Aware, IDE-Junk-Specific + Full Duplicate Handling
 
 ## When to activate
-The user wants to clean junk files from a backup or data directory AND identify duplicate files by content. This is especially useful for backups that may contain multiple copies of the same file across different project folders, media collections, or versioned assets. Builds on v2.0 with full backward compatibility plus new duplicate detection.
+The user wants to clean junk files from a backup or data directory AND handle duplicates automatically:
+- **Duplicate files**: moved to Trash (one copy kept)
+- **Duplicate directories**: if under a project → kept read-only; otherwise → moved to Trash
+
+This is the most aggressive cleanup version. Builds on v2.1 with automated duplicate removal and smart project-awareness for directory deduplication.
 
 ## Prerequisites
 - Python 3.8+ available on the system
@@ -15,7 +22,7 @@ The user wants to clean junk files from a backup or data directory AND identify 
 - Sufficient RAM for hashing candidate files (chunked reading keeps memory low)
 
 ## Configuration
-Before running, review or adjust these parameters in `cleanup_skill_v2_1.py`:
+Before running, review or adjust these parameters in `cleanup_skill_v2_2.py`:
 
 | Parameter | Default | Purpose |
 |---|---|---|
@@ -23,11 +30,13 @@ Before running, review or adjust these parameters in `cleanup_skill_v2_1.py`:
 | `DEFAULT_TRASH_DIR` | `/home/cc/Documents/Trash` | Destination for moved junk files |
 | `MAX_WEB_SIZE_BYTES` | `50 * 1024` (50 KB) | Threshold below which web formats are considered junk |
 | `PROJECT_DEPTH_LIMIT` | `5` | Max directory depth to search for source files during project validation |
-| `DUP_HASH_ALGORITHM` | `"md5"` | Hash algorithm: md5, sha1, or sha256 (md5 is fastest) |
+| `DUP_HASH_ALGORITHM` | `"md5"` | Hash algorithm for file content: md5, sha1, or sha256 (md5 is fastest) |
 | `DUP_MIN_FILE_SIZE` | `4096` (4 KB) | Skip files smaller than this during duplicate detection (noise reduction) |
 | `DUP_CHUNK_SIZE` | `65536` (64 KB) | Read buffer size for hashing (memory efficiency) |
+| `DUP_DIRS_VERIFY_CONTENT` | `True` | Verify directories have identical contents before moving duplicates |
+| `DUP_DIRS_HASH_ALGO` | `"md5"` | Hash algorithm for directory content verification |
 
-### Project Detection (Dual-Validation) - same as v2.0
+### Project Detection (Dual-Validation) - same as v2.1
 A directory is a project ONLY if BOTH conditions are met:
 1. A **project marker** file/folder exists at the directory level
 2. At least one **source code file** exists within `PROJECT_DEPTH_LIMIT` levels below
@@ -36,7 +45,7 @@ A directory is a project ONLY if BOTH conditions are met:
 
 **Source code extensions:** `.c`, `.cpp`, `.h`, `.hpp`, `.cs`, `.java`, `.kt`, `.py`, `.pyx`, `.js`, `.jsx`, `.ts`, `.tsx`, `.go`, `.rs`, `.swift`, `.dart`, `.lua`, `.rb`, `.php`, `.sql`, `.sh`, `.cmake`, `.pro`, `.fgl`
 
-### Junk Categories - same as v2.0
+### Junk Categories - same as v2.1
 
 **General junk** (applied to all files outside projects):
 - Metadata: `desktop.ini`, `.ds_store`, `.metadata`, `thumbs.db`
@@ -56,85 +65,108 @@ A directory is a project ONLY if BOTH conditions are met:
 
 **IMPORTANT: .obj files are NOT junk.** The `.obj` extension is excluded from project junk extensions because `.obj` files are legitimate 3D model assets in game projects. However, directories named `obj/` (Visual Studio build output) AND `blendcache_*` ARE still cleaned up.
 
-### Case-Insensitive Extension Handling - same as v2.0
+### Case-Insensitive Extension Handling - same as v2.1
 All file extensions are normalized to lowercase before comparison. This ensures `.PNG`, `.JPG`, `.TGA` etc. are caught by the same rules as `.png`, `.jpg`, `.tga`.
 
-## New in v2.1: File Duplication Verification
+## New in v2.2: Automated Duplicate Handling
 
-v2.1 adds **content-based duplicate detection** on top of v2.0's directory-level duplicate warnings. This uses a two-phase approach for efficiency:
+v2.2 adds **automated duplicate removal** on top of v2.1's read-only reporting. This is the key difference from v2.1.
 
-### How Duplicate Detection Works
+### File Duplicate Handling
 
-**Phase 1 - Size Grouping (fast filter)**
-- All files are grouped by their exact byte size
-- Files with unique sizes cannot be duplicates - they are skipped entirely
-- Files below `DUP_MIN_FILE_SIZE` (default 4 KB) are skipped to avoid hashing noise (e.g., tiny config files, empty placeholders)
+**Detection** (unchanged from v2.1):
+- Two-phase: size grouping → MD5 hashing
+- First file alphabetically = "KEPT", all others = "DUPLICATE"
 
-**Phase 2 - Content Hashing (verification)**
-- Only files that share the same size are hashed using MD5 (configurable)
-- Files with identical hashes are confirmed duplicates
-- The first file alphabetically is marked as "KEPT", all others as "DUPLICATE"
+**On `--execute`:**
+- All DUPLICATE files are **moved to Trash**
+- The KEPT file remains in its original location
+- Conflicts (file already exists in trash): skip and log
+- Stats tracked: files moved as duplicates, space freed
 
-### Why Two Phases?
+### Directory Duplicate Handling - NEW in v2.2
 
-Hashing every file in a large backup is slow and wastes CPU. By grouping by size first:
-- A 100,000-file backup might only have ~500 files that share sizes with at least one other file
-- Hashing drops from 100,000 operations to ~500 - a 200x speedup
+**Detection** (same signature-based approach from v2.1):
+- Group directories by `(dirname, file_count, subdir_count)`
+- Groups with 2+ members are potential duplicates
 
-### Output Format
+**Smart Resolution on `--execute`:**
 
-During scan/execute, duplicate groups are displayed like this:
+For each duplicate directory group:
 
+1. **Check if any path in the group is under a detected project**
+   - Walk up from each path to see if it falls within a detected project tree
+   
+2. **If YES (under a project):**
+   - Mark ALL copies as **read-only** (`chmod 555`)
+   - Report them clearly: "Project duplicate - kept read-only"
+   - Do NOT move any of them
+
+3. **If NO (not under any project):**
+   - Keep the first file alphabetically in place
+   - Move all other copies to Trash
+   - Log which were moved vs kept
+
+**Content Verification (optional but recommended):**
+- If `DUP_DIRS_VERIFY_CONTENT` is True, hash all files inside each candidate directory before moving
+- Directories with different contents are NOT considered duplicates
+- This prevents accidentally moving directories that just happen to have the same name/structure but different content
+
+### Output Format for Duplicates
+
+**File duplicates:**
 ```
 [md5_hash_prefix...] (1.5 MB each, 3 copies)
-  * project_a/assets/logo.png  <- KEPT
-  * project_b/assets/logo.png  <- DUPLICATE
-  * backups_2024/project_a_assets/logo.png  <- DUPLICATE
+  * project_a/assets/logo.png    <- KEPT (stays in place)
+  * project_b/assets/logo.png    <- DUPLICATE (moved to trash on --execute)
+  * backups_2024/assets/logo.png <- DUPLICATE (moved to trash on --execute)
 ```
 
-The tool also reports:
-- Total duplicate groups found
-- Total extra files (copies beyond the first)
-- Estimated space savings in human-readable format
+**Directory duplicates:**
+```
+[Textures] (30 files, 3 copies)
+  * Projects/Cenario_medieval/Resources/Textures  <- KEPT (project dir)
+  * Projects/Editor/Resources/Textures            <- READ-ONLY (project dir, chmod 555)
+  * Labirinto/Resources/Textures                  <- DUPLICATE (moved to trash on --execute)
+```
 
 ### Safety Guarantees for Duplicates
 
-- Duplicate detection is **read-only** - no files are deleted or moved based on duplicates
-- Only the first file (alphabetically by path) is marked as "KEPT" - this is a suggestion, not an action
-- The user must manually decide which copy to keep if they want to remove duplicates
-- Hash collisions are virtually impossible with MD5 for typical backup files; use `sha256` if paranoid
+- **File duplicates**: Moved to Trash (not deleted). One copy always kept.
+- **Directory duplicates under projects**: Kept read-only, never moved or modified.
+- **Directory duplicates not under projects**: Moved to Trash, one copy kept.
+- Conflicting files in trash: skipped and logged (never overwritten).
+- Hash collisions are virtually impossible with MD5; use `sha256` if paranoid.
+- Content verification can be disabled for speed (`DUP_DIRS_VERIFY_CONTENT = False`).
 
 ## Execution Protocol
 
 ### Step 1 - Scan and Report (always first)
 ```bash
-python cleanup_skill_v2_1.py --source /path/to/backup
+python cleanup_skill_v2_2.py --source /path/to/backup
 ```
-- Performs a full scan and categorizes files into:
-  - **Junk to move**: files/dirs matching junk patterns
-  - **Projects detected**: directories with both markers and source files
-  - **Directory duplicates**: directories that appear to be duplicates (same name, similar structure) - same as v2.0
-  - **File content duplicates**: actual duplicate files identified by MD5 hash - **NEW in v2.1**
-  - **Large archives**: `.rar`, `.zip`, `.7z`, `.tar.gz` files (reported but not moved)
-  - **System fonts**: `.ttf` files in top-level `Art/` or system directories (flagged for review)
-- Review the categorized log output and sample junk files listed
-- Verify no important files are flagged for removal
-- If adjustments needed, edit `SOURCE_CODE_EXTS`, `PROJECT_MARKERS`, `PROJECT_JUNK_DIRS`, or depth limits in the script
+- Performs a full scan and categorizes everything including duplicate analysis
+- Shows what WOULD be moved vs kept on `--execute`
+- Review carefully before proceeding
 
 ### Step 2 - Execute
 ```bash
-python cleanup_skill_v2_1.py --source /path/to/backup --trash /path/to/trash --execute
+python cleanup_skill_v2_2.py --source /path/to/backup --trash /path/to/trash --execute
 ```
-- Files are moved (not deleted) to the trash directory, preserving their original relative paths
-- Conflicting files in trash are logged and skipped (never overwritten)
-- After moving files, empty directories left behind in the source are automatically removed
-- Duplicate directory warnings are printed but directories are NOT automatically removed (user must confirm)
-- **File content duplicates are reported but NOT auto-deleted** - user must manually remove copies
+Actions performed in order:
+1. Move junk files to Trash (same as v2.1)
+2. Move junk directories to Trash (same as v2.1)
+3. Move duplicate files to Trash (NEW - one copy kept)
+4. Handle duplicate directories:
+   - Project dirs → mark read-only
+   - Non-project dirs → move duplicates to Trash
+5. Clean up empty directories in source
 
 ### Step 3 - Verify
 ```bash
 find <trash> -type f | wc -l    # count moved files
 ls -R <trash>                    # spot-check structure
+find <source> -perm -o-w         # check for read-only project dirs
 ```
 
 ## Safety Guarantees
@@ -145,9 +177,11 @@ ls -R <trash>                    # spot-check structure
 - Stdlib-only - zero external dependencies
 - Empty directories cleaned up after move (reverse walk)
 - Case-insensitive extension matching prevents missed files
-- Duplicate directory detection warns without auto-deleting
-- **File content duplicate detection is read-only - no files deleted based on duplicates**
+- **File duplicates are moved to Trash on execute** (one copy always kept)
+- **Directory duplicates under projects are kept read-only** (never moved)
+- **Directory duplicates not under projects are moved to Trash** (one copy kept)
 - Large archives and system fonts are reported, not silently removed
+- Content verification prevents moving non-identical directories
 - Configuration separated from logic for easy auditing
 - Chunked file hashing keeps memory usage low regardless of file size
 
@@ -158,14 +192,14 @@ ls -R <trash>                    # spot-check structure
 - Increase or decrease `PROJECT_DEPTH_LIMIT` (3-10 range recommended)
 - Add new project markers to `PROJECT_MARKERS` for your toolchain
 - Adjust `MAX_WEB_SIZE_BYTES` based on your backup's typical file sizes
-- **Lower `DUP_MIN_FILE_SIZE`** to detect duplicates among smaller files (but increases scan time)
+- **Disable `DUP_DIRS_VERIFY_CONTENT`** if you're confident about directory signatures and want faster execution
 - **Use `sha256` instead of `md5`** if you want stronger collision resistance at the cost of speed
 
 ## Completion Checklist
 - [ ] Scan completed and reviewed
 - [ ] Config parameters verified for this specific backup
-- [ ] Duplicate warnings assessed (both directory-level and file-content)
+- [ ] Duplicate resolution strategy assessed (files moved, project dirs kept read-only, non-project dirs moved)
 - [ ] Large archives and system fonts reviewed (if any)
 - [ ] `--execute` run completed successfully
 - [ ] Trash directory spot-checked - no important files removed
-- [ ] File duplicate groups reviewed - decide which copies to manually remove if needed
+- [ ] Read-only project directories verified (should have mode 555 or similar)

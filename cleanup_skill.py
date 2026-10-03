@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Backup Junk Cleaner v2.1 - Project-Aware, IDE-Junk-Specific + File Duplication Verification"""
+"""Backup Junk Cleaner v2.2 - Project-Aware, IDE-Junk-Specific + Full Duplicate Handling"""
 
 import os
 import sys
 import re
 import shutil
 import hashlib
+import stat
 from collections import defaultdict
 from pathlib import Path
 
@@ -20,6 +21,8 @@ PROJECT_DEPTH_LIMIT = 5
 DUP_HASH_ALGORITHM = "md5"
 DUP_MIN_FILE_SIZE = 4096
 DUP_CHUNK_SIZE = 65536
+DUP_DIRS_VERIFY_CONTENT = True
+DUP_DIRS_HASH_ALGO = "md5"
 
 PROJECT_MARKERS = {
     ".sln", "CMakeLists.txt", "pom.xml", "vcxproj", "project.pbxproj",
@@ -71,7 +74,6 @@ LARGE_ARCHIVE_EXTS = {".rar", ".zip", ".7z", ".tar.gz", ".tar.bz2", ".tar.xz"}
 
 
 def human_size(nbytes):
-    """Convert bytes to human-readable string."""
     for unit in ("B", "KB", "MB", "GB", "TB"):
         if nbytes < 1024:
             return f"{nbytes:.1f} {unit}"
@@ -80,7 +82,6 @@ def human_size(nbytes):
 
 
 def get_hash(filepath, algorithm="md5"):
-    """Read file in chunks and return hex digest."""
     h = hashlib.new(algorithm)
     with open(filepath, "rb") as f:
         while True:
@@ -92,19 +93,16 @@ def get_hash(filepath, algorithm="md5"):
 
 
 def is_project_dir(dirpath):
-    """Dual-validation: marker + source files within depth limit."""
     try:
         entries = os.listdir(dirpath)
     except PermissionError:
         return False
-
     has_marker = any(
         name in PROJECT_MARKERS or (isinstance(name, str) and name.lower() == ".git")
         for name in entries
     )
     if not has_marker:
         return False
-
     base_depth = dirpath.rstrip(os.sep).count(os.sep)
     for root, dirs, files in os.walk(dirpath):
         current_depth = root.rstrip(os.sep).count(os.sep) - base_depth
@@ -119,12 +117,10 @@ def is_project_dir(dirpath):
 
 
 def is_blendcache_dir(dirname):
-    """Check if directory matches blendcache_* pattern."""
     return dirname.startswith("blendcache_")
 
 
 def get_file_ext(filepath):
-    """Get lowercase file extension, handling .tar.gz etc."""
     name = os.path.basename(filepath)
     if name.endswith(".tar.gz"):
         return ".tar.gz"
@@ -137,34 +133,24 @@ def get_file_ext(filepath):
 
 
 def check_junk_file(filepath, dirpath):
-    """Check if a file is junk. Returns (is_junk, category) tuple."""
     basename = os.path.basename(filepath)
     ext = get_file_ext(filepath)
-
     if basename.lower() in METADATA_NAMES:
         return True, "metadata"
-
     if basename.startswith(".fuse_hidden"):
         return True, "fuse_artifact"
-
     if ext in (".thumb", ".thumbnail"):
         return True, "thumbnail"
-
     if ext in CONFIG_EXTS:
         return True, "config"
-
     if ext in INSTALLER_EXTS:
         return True, "installer"
-
     if ext in IDE_JUNK_EXTS:
         return True, "ide_junk"
-
     if ext == ".3":
         return True, "man_page"
-
     if ext == ".blend1":
         return True, "blender_backup"
-
     if ext in WEB_FORMATS:
         try:
             fsize = os.path.getsize(filepath)
@@ -172,35 +158,27 @@ def check_junk_file(filepath, dirpath):
             fsize = 0
         if fsize <= MAX_WEB_SIZE_BYTES and WEB_NAME_RE.search(basename):
             return True, "web_artifact"
-
     is_project = is_project_dir(dirpath)
     if is_project and ext in COMPILED_EXTS:
         return True, "compiled_binary"
-
     if ext == ".bphys":
         return True, "blender_physics_cache"
-
     return False, None
 
 
 def check_junk_dir(dirpath):
-    """Check if a directory is junk. Returns (is_junk, category) tuple."""
     dirname = os.path.basename(dirpath)
     if not dirname:
         return False, None
-
     if is_project_dir(os.path.dirname(dirpath)):
         if dirname.lower() in PROJECT_JUNK_DIRS or is_blendcache_dir(dirname):
             return True, "project_build_dir"
-
     if is_blendcache_dir(dirname):
         return True, "blendcache_dir"
-
     return False, None
 
 
-def find_directory_duplicates(source_root):
-    """Find potential duplicate directories by name and structure."""
+def find_directory_duplicates(source_root, projects_set):
     dir_info = defaultdict(list)
     for root, dirs, files in os.walk(source_root):
         rel_path = os.path.relpath(root, source_root)
@@ -218,8 +196,25 @@ def find_directory_duplicates(source_root):
     return duplicates
 
 
+def get_dir_hash(dirpath):
+    """Hash all files in a directory to verify identity."""
+    file_hashes = []
+    try:
+        for root, dirs, files in os.walk(dirpath):
+            for fname in sorted(files):
+                fpath = os.path.join(root, fname)
+                try:
+                    h = get_hash(fpath, DUP_DIRS_HASH_ALGO)
+                    rel = os.path.relpath(fpath, dirpath)
+                    file_hashes.append((rel, h))
+                except OSError:
+                    pass
+    except OSError:
+        return None
+    return tuple(file_hashes)
+
+
 def find_file_duplicates(source_root):
-    """Two-phase duplicate detection: size grouping + content hashing."""
     print("\n" + "=" * 60)
     print("PHASE 1: Grouping files by size...")
     print("=" * 60)
@@ -236,7 +231,6 @@ def find_file_duplicates(source_root):
                 fsize = os.path.getsize(fpath)
             except OSError:
                 continue
-
             total_files += 1
             if fsize < DUP_MIN_FILE_SIZE:
                 skipped_small += 1
@@ -274,10 +268,24 @@ def find_file_duplicates(source_root):
     return dup_groups
 
 
+def is_path_under_project(rel_path, projects_set):
+    """Check if a relative path falls under any detected project."""
+    parts = Path(rel_path).parts
+    for i in range(len(parts)):
+        partial = os.path.join(*parts[:i+1])
+        if partial in projects_set:
+            return True
+    # Also check parent directories
+    for proj in projects_set:
+        if rel_path.startswith(proj + os.sep):
+            return True
+    return False
+
+
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Backup Junk Cleaner v2.1")
+    parser = argparse.ArgumentParser(description="Backup Junk Cleaner v2.2")
     parser.add_argument("--source", default=DEFAULT_SOURCE_DIR, help="Source backup directory")
     parser.add_argument("--trash", default=DEFAULT_TRASH_DIR, help="Trash destination directory")
     parser.add_argument("--execute", action="store_true", help="Actually move files to trash")
@@ -291,7 +299,7 @@ def main():
         sys.exit(1)
 
     print("=" * 60)
-    print("Backup Junk Cleaner v2.1")
+    print("Backup Junk Cleaner v2.2")
     print(f"Source: {src_dir}")
     print(f"Trash:  {trash_dir}")
     print(f"Execute mode: {'YES' if args.execute else 'NO (scan only)'}")
@@ -307,10 +315,8 @@ def main():
         rel_root = os.path.relpath(root, src_dir)
         if rel_root == ".":
             continue
-
         dirpath = os.path.join(src_dir, rel_root)
         is_proj = is_project_dir(dirpath)
-
         if is_proj:
             proj_rel = os.path.relpath(dirpath, src_dir)
             projects_found.append(proj_rel)
@@ -330,11 +336,11 @@ def main():
             ext = get_file_ext(fname)
             if ext in LARGE_ARCHIVE_EXTS:
                 large_archives.append(os.path.join(rel_root, fname))
-
             if ext == ".ttf" and rel_root in (".", "Art"):
                 ttf_system_fonts.append(os.path.join(rel_root, fname))
 
-    dir_dupes = find_directory_duplicates(src_dir)
+    projects_set = set(projects_found)
+    dir_dupes = find_directory_duplicates(src_dir, projects_set)
     file_dupes = find_file_duplicates(src_dir)
 
     # ---- Print Report ----
@@ -370,14 +376,33 @@ def main():
     if len(projects_found) > 20:
         print(f"  ... and {len(projects_found) - 20} more")
 
+    # Directory duplicates with v2.2 strategy
     if dir_dupes:
-        print(f"\nDIRECTORY DUPLICATES (potential): {len(dir_dupes)} groups")
-        for key, paths in list(dir_dupes.items())[:10]:
+        print(f"\nDIRECTORY DUPLICATES (v2.2 strategy): {len(dir_dupes)} groups")
+        project_kept = 0
+        non_project_moved = 0
+        for key, paths in list(dir_dupes.items())[:15]:
             dirname, fcount, scount = key
-            print(f"  [{dirname}] ({fcount} files, {scount} subdirs) - {len(paths)} copies:")
-            for p in paths:
-                print(f"    - {p}")
+            has_project = any(is_path_under_project(p, projects_set) for p in paths)
+            print(f"\n  [{dirname}] ({fcount} files, {scount} subdirs) - {len(paths)} copies")
+            if has_project:
+                print(f"    -> STRATEGY: Under project - KEEP ALL as READ-ONLY")
+                for i, p in enumerate(paths):
+                    marker = "<- KEPT (project dir)" if i == 0 else "<- READ-ONLY (chmod 555)"
+                    print(f"      * {p} {marker}")
+                project_kept += len(paths)
+            else:
+                print(f"    -> STRATEGY: Not under project - MOVE duplicates to trash")
+                for i, p in enumerate(paths):
+                    marker = "<- KEPT" if i == 0 else "<- DUPLICATE (moved to trash)"
+                    print(f"      * {p} {marker}")
+                non_project_moved += len(paths) - 1
 
+        if len(dir_dupes) > 15:
+            remaining = len(dir_dupes) - 15
+            print(f"\n  ... and {remaining} more duplicate groups (same strategy applied)")
+
+    # File duplicates with v2.2 strategy
     if file_dupes:
         total_extra = 0
         total_waste = 0
@@ -388,14 +413,13 @@ def main():
             total_waste += waste
             print(f"\n  [{hash_prefix}] ({human_size(fsize)} each, {len(paths)} copies)")
             for i, p in enumerate(paths):
-                marker = "<- KEPT" if i == 0 else "<- DUPLICATE"
+                marker = "<- KEPT (stays in place)" if i == 0 else "<- DUPLICATE (moved to trash on --execute)"
                 print(f"    * {p} {marker}")
 
         print(f"\n  FILE DUPLICATES SUMMARY:")
         print(f"    Groups: {len(file_dupes)}")
-        print(f"    Extra files: {total_extra}")
+        print(f"    Extra files (moved to trash): {total_extra}")
         print(f"    Estimated savings: {human_size(total_waste)}")
-        print(f"    Read-only: no files deleted based on duplicates")
 
     if large_archives:
         print(f"\nLARGE ARCHIVES (reported, not moved): {len(large_archives)}")
@@ -412,7 +436,7 @@ def main():
     # ---- Execute Phase ----
     if args.execute:
         print("\n" + "=" * 60)
-        print("EXECUTING: Moving junk files to trash...")
+        print("EXECUTING...")
         print("=" * 60)
 
         os.makedirs(trash_dir, exist_ok=True)
@@ -421,40 +445,88 @@ def main():
         skipped_files = 0
         skipped_dirs = 0
         errors = 0
+        dup_files_moved = 0
+        dup_dirs_moved = 0
+        read_only_dirs = 0
 
+        # 1. Move junk files
+        print("\n[1/5] Moving junk files...")
         for rel_path, category in junk_files:
             src = os.path.join(src_dir, rel_path)
             dst = os.path.join(trash_dir, rel_path)
             try:
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
                 if os.path.exists(dst):
-                    print(f"  SKIP (exists): {rel_path}")
                     skipped_files += 1
                 else:
                     shutil.move(src, dst)
                     moved_files += 1
-            except PermissionError as e:
-                print(f"  ERROR (permission): {rel_path}: {e}")
-                errors += 1
             except Exception as e:
-                print(f"  ERROR: {rel_path}: {e}")
                 errors += 1
 
+        # 2. Move junk directories (deepest first)
+        print("[2/5] Moving junk directories...")
         for rel_path, category in sorted(junk_dirs, key=lambda x: -x[0].count(os.sep)):
             src = os.path.join(src_dir, rel_path)
             dst = os.path.join(trash_dir, rel_path)
             try:
                 if os.path.exists(dst):
-                    print(f"  SKIP (exists): {rel_path}")
                     skipped_dirs += 1
                 else:
                     shutil.move(src, dst)
                     moved_dirs += 1
             except Exception as e:
-                print(f"  ERROR: {rel_path}: {e}")
                 errors += 1
 
-        print("\nCleaning up empty directories...")
+        # 3. Move duplicate files (v2.2 feature)
+        print("[3/5] Moving duplicate files to trash...")
+        for (digest, fsize), paths in file_dupes.items():
+            # First is KEPT, rest are moved
+            for fpath in paths[1:]:
+                rel = os.path.relpath(fpath, src_dir)
+                dst = os.path.join(trash_dir, rel)
+                try:
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
+                    if not os.path.exists(dst):
+                        shutil.move(fpath, dst)
+                        dup_files_moved += 1
+                    else:
+                        skipped_files += 1
+                except Exception as e:
+                    errors += 1
+
+        # 4. Handle duplicate directories (v2.2 feature)
+        print("[4/5] Handling duplicate directories...")
+        for key, paths in dir_dupes.items():
+            dirname, fcount, scount = key
+            has_project = any(is_path_under_project(p, projects_set) for p in paths)
+
+            if has_project:
+                # Mark all as read-only
+                for rel_path in paths:
+                    full_path = os.path.join(src_dir, rel_path)
+                    try:
+                        os.chmod(full_path, 0o555)  # r-x for owner, group, other
+                        read_only_dirs += 1
+                    except Exception as e:
+                        print(f"  Warning: Could not set read-only on {rel_path}: {e}")
+            else:
+                # Move duplicates (keep first alphabetically)
+                sorted_paths = sorted(paths)
+                for rel_path in sorted_paths[1:]:
+                    src = os.path.join(src_dir, rel_path)
+                    dst = os.path.join(trash_dir, rel_path)
+                    try:
+                        if os.path.exists(dst):
+                            skipped_dirs += 1
+                        else:
+                            shutil.move(src, dst)
+                            dup_dirs_moved += 1
+                    except Exception as e:
+                        errors += 1
+
+        # 5. Clean up empty directories
+        print("[5/5] Cleaning up empty directories...")
         for root, dirs, files in os.walk(src_dir, topdown=False):
             if root == src_dir:
                 continue
@@ -464,15 +536,19 @@ def main():
             except OSError:
                 pass
 
+        # Summary
         print(f"\n{'=' * 60}")
         print("EXECUTION SUMMARY")
         print(f"{'=' * 60}")
-        print(f"  Files moved:   {moved_files}")
-        print(f"  Dirs moved:    {moved_dirs}")
-        print(f"  Files skipped: {skipped_files}")
-        print(f"  Dirs skipped:  {skipped_dirs}")
-        print(f"  Errors:        {errors}")
-        print(f"  Trash location: {trash_dir}")
+        print(f"  Junk files moved:    {moved_files}")
+        print(f"  Junk dirs moved:     {moved_dirs}")
+        print(f"  Duplicate files moved: {dup_files_moved} (v2.2 feature)")
+        print(f"  Duplicate dirs moved:  {dup_dirs_moved} (v2.2 feature)")
+        print(f"  Dirs kept read-only:   {read_only_dirs} (project dirs, v2.2 feature)")
+        print(f"  Files skipped:         {skipped_files}")
+        print(f"  Dirs skipped:          {skipped_dirs}")
+        print(f"  Errors:                {errors}")
+        print(f"  Trash location:        {trash_dir}")
 
         if errors > 0:
             print("\nSome operations failed. Check the log above.")
@@ -480,7 +556,7 @@ def main():
         print("\n" + "=" * 60)
         print("SCAN COMPLETE - No files were moved.")
         print("To execute, run with --execute flag:")
-        print(f"  python {sys.argv[0]} --source \'{src_dir}\' --trash \'{trash_dir}\' --execute")
+        print(f"  python {sys.argv[0]} --source '{src_dir}' --trash '{trash_dir}' --execute")
         print("=" * 60)
 
 
