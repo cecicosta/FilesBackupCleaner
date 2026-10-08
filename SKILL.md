@@ -1,5 +1,5 @@
 ---
-name: backup-junk-cleaner-v2-3
+name: backup-junk-cleaner-v2-4
 description: Use when asked to clean junk files from backup directories with full
   duplicate handling AND project fingerprint-based duplicate detection. Builds on
   v2.2 with automated file/directory duplicate removal plus new read-only project-level
@@ -9,7 +9,7 @@ description: Use when asked to clean junk files from backup directories with ful
 ---
 
 ---
-name: backup-junk-cleaner-v2-3
+name: backup-junk-cleaner-v2-4
 description: Use when asked to clean junk files from backup directories with full duplicate handling AND project fingerprint-based duplicate detection. Builds on v2.2 with automated file/directory duplicate removal plus new read-only project-level duplicate identification using a three-layer fingerprint (root structure, extension distribution, identity signals). Projects are never auto-deleted — only reported ordered by last modified time.
 ---
 
@@ -30,7 +30,7 @@ This is the most comprehensive cleanup version. Builds on v2.2 with automated du
 - Sufficient RAM for hashing candidate files (chunked reading keeps memory low)
 
 ## Configuration
-Before running, review or adjust these parameters in `cleanup_skill_v2_3.py`:
+Before running, review or adjust these parameters in `cleanup_skill_v2_4.py`:
 
 | Parameter | Default | Purpose |
 |---|---|---|
@@ -229,7 +229,7 @@ For each duplicate directory group:
 
 ### Step 1 - Scan and Report (always first)
 ```bash
-python cleanup_skill_v2_3.py --source /path/to/backup
+python cleanup_skill_v2_4.py --source /path/to/backup
 ```
 - Performs a full scan and categorizes everything:
   - **Junk to move**: files/dirs matching junk patterns
@@ -244,7 +244,7 @@ python cleanup_skill_v2_3.py --source /path/to/backup
 
 ### Step 2 - Execute
 ```bash
-python cleanup_skill_v2_3.py --source /path/to/backup --trash /path/to/trash --execute
+python cleanup_skill_v2_4.py --source /path/to/backup --trash /path/to/trash --execute
 ```
 Actions performed in order:
 1. Move junk files to Trash (same as v2.2)
