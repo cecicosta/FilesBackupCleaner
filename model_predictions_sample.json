@@ -1,0 +1,3002 @@
+[
+  {
+    "features": [
+      16.893076329220445,
+      7.8374,
+      0.0,
+      1.0,
+      0.0,
+      0.75,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "181078_373254976063641_2117998355_n.jpg",
+    "filename": "181078_373254976063641_2117998355_n.jpg"
+  },
+  {
+    "features": [
+      15.629328157538728,
+      7.8319,
+      0.0,
+      1.0,
+      0.0,
+      0.75,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "251957_380674315324456_2126840809_n.jpg",
+    "filename": "251957_380674315324456_2126840809_n.jpg"
+  },
+  {
+    "features": [
+      16.998491267495794,
+      7.5786,
+      0.0,
+      1.0,
+      0.0,
+      0.833,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "393277_106477046137346_101717503279967_30131_1244975024_n.jpg",
+    "filename": "393277_106477046137346_101717503279967_30131_1244975024_n.jpg"
+  },
+  {
+    "features": [
+      17.052642340214433,
+      7.8791,
+      0.0,
+      1.0,
+      0.0,
+      0.75,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "428418_373254622730343_1973986540_n.jpg",
+    "filename": "428418_373254622730343_1973986540_n.jpg"
+  },
+  {
+    "features": [
+      14.350939181546432,
+      7.9172,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "47207lis - C\u00f3pia.jpg",
+    "filename": "47207lis - C\u00f3pia.jpg"
+  },
+  {
+    "features": [
+      14.350939181546432,
+      7.9172,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "47207lis.jpg",
+    "filename": "47207lis.jpg"
+  },
+  {
+    "features": [
+      15.500094949671807,
+      7.7745,
+      0.0,
+      1.0,
+      0.0,
+      0.75,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "481240_381816818548946_554344447_n.jpg",
+    "filename": "481240_381816818548946_554344447_n.jpg"
+  },
+  {
+    "features": [
+      15.596218880023589,
+      7.851,
+      0.0,
+      1.0,
+      0.0,
+      0.75,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "543270_373254846063654_700715_n.jpg",
+    "filename": "543270_373254846063654_700715_n.jpg"
+  },
+  {
+    "features": [
+      16.93587866818917,
+      7.718,
+      0.0,
+      1.0,
+      0.0,
+      0.833,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "549407_243480189100948_217880064994294_391143_2120345000_n.jpg",
+    "filename": "549407_243480189100948_217880064994294_391143_2120345000_n.jpg"
+  },
+  {
+    "features": [
+      16.499565640266056,
+      7.869,
+      0.0,
+      1.0,
+      0.0,
+      0.75,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "562225_373255159396956_2016898845_n.jpg",
+    "filename": "562225_373255159396956_2016898845_n.jpg"
+  },
+  {
+    "features": [
+      15.512493573945038,
+      7.8303,
+      0.0,
+      1.0,
+      0.0,
+      0.75,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "600741_374302072625598_2129324842_n.jpg",
+    "filename": "600741_374302072625598_2129324842_n.jpg"
+  },
+  {
+    "features": [
+      18.018216482079364,
+      6.0635,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Catarine - perfil.jpg",
+    "filename": "Catarine - perfil.jpg"
+  },
+  {
+    "features": [
+      17.109881653626267,
+      5.9348,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Catarine.jpg",
+    "filename": "Catarine.jpg"
+  },
+  {
+    "features": [
+      14.476366497386179,
+      7.4888,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Catarine_placeholder.jpg",
+    "filename": "Catarine_placeholder.jpg"
+  },
+  {
+    "features": [
+      17.83856995965737,
+      3.7627,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "chefe.jpg",
+    "filename": "chefe.jpg"
+  },
+  {
+    "features": [
+      18.0252315017362,
+      3.7626,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "chefe2.jpg",
+    "filename": "chefe2.jpg"
+  },
+  {
+    "features": [
+      14.334762109595427,
+      7.9517,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "corte-de-cabelo-masculino5.jpg",
+    "filename": "corte-de-cabelo-masculino5.jpg"
+  },
+  {
+    "features": [
+      14.303281311200417,
+      7.9562,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "cortes-de-cabelo-masculino-2011.jpg",
+    "filename": "cortes-de-cabelo-masculino-2011.jpg"
+  },
+  {
+    "features": [
+      6.266786540694901,
+      4.2236,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/abstractList.h",
+    "filename": "abstractList.h"
+  },
+  {
+    "features": [
+      11.64880694972577,
+      4.6236,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/arvore.h",
+    "filename": "arvore.h"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/as",
+    "filename": "as"
+  },
+  {
+    "features": [
+      6.658211482751795,
+      0.8063,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/asconfigfile",
+    "filename": "asconfigfile"
+  },
+  {
+    "features": [
+      2.321928094887362,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/aslightsourcelist",
+    "filename": "aslightsourcelist"
+  },
+  {
+    "features": [
+      12.508042334429005,
+      0.912,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/aslistas",
+    "filename": "aslistas"
+  },
+  {
+    "features": [
+      9.878050912728536,
+      1.2604,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/asnameslist",
+    "filename": "asnameslist"
+  },
+  {
+    "features": [
+      6.357552004618084,
+      4.7448,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/cbox.cpp",
+    "filename": "cbox.cpp"
+  },
+  {
+    "features": [
+      8.741466986401146,
+      4.8832,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/cbox.h",
+    "filename": "cbox.h"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/cenario1",
+    "filename": "cenario1"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.2368,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/cenario1configfile",
+    "filename": "cenario1configfile"
+  },
+  {
+    "features": [
+      7.1799090900149345,
+      2.5717,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/cenario1lightsourcelist",
+    "filename": "cenario1lightsourcelist"
+  },
+  {
+    "features": [
+      12.838613044196972,
+      2.0905,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/cenario1listas",
+    "filename": "cenario1listas"
+  },
+  {
+    "features": [
+      10.029287226968245,
+      1.3265,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/cenario1nameslist",
+    "filename": "cenario1nameslist"
+  },
+  {
+    "features": [
+      9.945443836377912,
+      4.5433,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Cenario_medieval.pro",
+    "filename": "Cenario_medieval.pro"
+  },
+  {
+    "features": [
+      12.383974232607853,
+      5.0012,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Cenario_medieval.pro.user",
+    "filename": "Cenario_medieval.pro.user"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/ceu",
+    "filename": "ceu"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.265,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/ceuconfigfile",
+    "filename": "ceuconfigfile"
+  },
+  {
+    "features": [
+      2.321928094887362,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/ceulightsourcelist",
+    "filename": "ceulightsourcelist"
+  },
+  {
+    "features": [
+      12.03376711484639,
+      0.2636,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/ceulistas",
+    "filename": "ceulistas"
+  },
+  {
+    "features": [
+      6.768184324776926,
+      0.9607,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/ceunameslist",
+    "filename": "ceunameslist"
+  },
+  {
+    "features": [
+      6.554588851677638,
+      4.6648,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/combobox.cpp",
+    "filename": "combobox.cpp"
+  },
+  {
+    "features": [
+      8.475733430966399,
+      5.0695,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/combobox.h",
+    "filename": "combobox.h"
+  },
+  {
+    "features": [
+      17.763789422793614,
+      4.6248,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug.txt",
+    "filename": "debug.txt"
+  },
+  {
+    "features": [
+      16.833964813032374,
+      4.2249,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug1.txt",
+    "filename": "debug1.txt"
+  },
+  {
+    "features": [
+      15.703498082832114,
+      4.421,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug2.txt",
+    "filename": "debug2.txt"
+  },
+  {
+    "features": [
+      13.406470768529283,
+      4.4865,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/definitions.h",
+    "filename": "definitions.h"
+  },
+  {
+    "features": [
+      15.293974492734291,
+      4.6907,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/draw.h",
+    "filename": "draw.h"
+  },
+  {
+    "features": [
+      9.157346935362844,
+      4.617,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/formfactorscene.cpp",
+    "filename": "formfactorscene.cpp"
+  },
+  {
+    "features": [
+      7.679480099505446,
+      5.0849,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/formfactorscene.h",
+    "filename": "formfactorscene.h"
+  },
+  {
+    "features": [
+      16.04052518444031,
+      4.7325,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/glm.cpp",
+    "filename": "glm.cpp"
+  },
+  {
+    "features": [
+      13.367278229359725,
+      4.694,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/glm.h",
+    "filename": "glm.h"
+  },
+  {
+    "features": [
+      13.746409348239164,
+      4.715,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Grafo.h",
+    "filename": "Grafo.h"
+  },
+  {
+    "features": [
+      13.858660984722777,
+      4.7384,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Hash.h",
+    "filename": "Hash.h"
+  },
+  {
+    "features": [
+      5.807354922057604,
+      4.2307,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/hemicubo.cpp",
+    "filename": "hemicubo.cpp"
+  },
+  {
+    "features": [
+      6.857980995127572,
+      4.8093,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/hemicubo.h",
+    "filename": "hemicubo.h"
+  },
+  {
+    "features": [
+      13.35521342811602,
+      4.8598,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/hemiesfera.cpp",
+    "filename": "hemiesfera.cpp"
+  },
+  {
+    "features": [
+      9.588714635582264,
+      4.9485,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/hemiesfera.h",
+    "filename": "hemiesfera.h"
+  },
+  {
+    "features": [
+      5.832890014164741,
+      3.5841,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/ilumin.txt",
+    "filename": "ilumin.txt"
+  },
+  {
+    "features": [
+      9.672425341971495,
+      5.018,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/interface.cpp",
+    "filename": "interface.cpp"
+  },
+  {
+    "features": [
+      7.98299357469431,
+      5.0802,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/interface.h",
+    "filename": "interface.h"
+  },
+  {
+    "features": [
+      15.011969730750172,
+      5.1499,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/interfacegl.cpp",
+    "filename": "interfacegl.cpp"
+  },
+  {
+    "features": [
+      13.428491035332245,
+      4.7118,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/interfacegl.h",
+    "filename": "interfacegl.h"
+  },
+  {
+    "features": [
+      16.794428558923784,
+      5.6152,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/jpeg.dll",
+    "filename": "jpeg.dll"
+  },
+  {
+    "features": [
+      18.70217606803115,
+      6.0069,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/libfreetype-6.dll",
+    "filename": "libfreetype-6.dll"
+  },
+  {
+    "features": [
+      17.011238176946843,
+      6.0602,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/libpng12-0.dll",
+    "filename": "libpng12-0.dll"
+  },
+  {
+    "features": [
+      18.278453995675104,
+      6.1557,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/libtiff-3.dll",
+    "filename": "libtiff-3.dll"
+  },
+  {
+    "features": [
+      11.90048948483465,
+      5.1937,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/lightsource.cpp",
+    "filename": "lightsource.cpp"
+  },
+  {
+    "features": [
+      10.207014320177532,
+      4.9427,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/lightsource.h",
+    "filename": "lightsource.h"
+  },
+  {
+    "features": [
+      7.159871336778389,
+      4.6986,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/lineedit.cpp",
+    "filename": "lineedit.cpp"
+  },
+  {
+    "features": [
+      8.060695931687555,
+      4.9628,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/lineedit.h",
+    "filename": "lineedit.h"
+  },
+  {
+    "features": [
+      12.77869318322384,
+      4.4765,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/lista.h",
+    "filename": "lista.h"
+  },
+  {
+    "features": [
+      15.527538094496071,
+      4.3363,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/log.txt",
+    "filename": "log.txt"
+  },
+  {
+    "features": [
+      7.569855608330948,
+      4.7801,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/main.cpp",
+    "filename": "main.cpp"
+  },
+  {
+    "features": [
+      7.870364719583405,
+      4.6533,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/mainwindow.cpp",
+    "filename": "mainwindow.cpp"
+  },
+  {
+    "features": [
+      8.483815777264256,
+      4.9488,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/mainwindow.h",
+    "filename": "mainwindow.h"
+  },
+  {
+    "features": [
+      15.576720525080246,
+      4.6496,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/mainwindow.ui",
+    "filename": "mainwindow.ui"
+  },
+  {
+    "features": [
+      12.631404448728468,
+      5.489,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/Makefile",
+    "filename": "Makefile"
+  },
+  {
+    "features": [
+      13.490474864825336,
+      5.5069,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Makefile.Debug",
+    "filename": "Makefile.Debug"
+  },
+  {
+    "features": [
+      13.524419281544802,
+      5.4327,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Makefile.Release",
+    "filename": "Makefile.Release"
+  },
+  {
+    "features": [
+      12.665780028329483,
+      4.7954,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Map.cpp",
+    "filename": "Map.cpp"
+  },
+  {
+    "features": [
+      10.8649599151426,
+      4.5767,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/Map.h",
+    "filename": "Map.h"
+  },
+  {
+    "features": [
+      11.157978449945432,
+      5.0539,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/material.cpp",
+    "filename": "material.cpp"
+  },
+  {
+    "features": [
+      10.083479327331842,
+      4.783,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/material.h",
+    "filename": "material.h"
+  },
+  {
+    "features": [
+      5.754887502163468,
+      4.4262,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/mystring.cpp",
+    "filename": "mystring.cpp"
+  },
+  {
+    "features": [
+      9.12670447284319,
+      4.5923,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/mystring.h",
+    "filename": "mystring.h"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/novo",
+    "filename": "novo"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.0762,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/novoconfigfile",
+    "filename": "novoconfigfile"
+  },
+  {
+    "features": [
+      2.321928094887362,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/novolightsourcelist",
+    "filename": "novolightsourcelist"
+  },
+  {
+    "features": [
+      14.801354713850127,
+      3.6426,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/novolistas",
+    "filename": "novolistas"
+  },
+  {
+    "features": [
+      12.851163413220117,
+      1.5066,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/novonameslist",
+    "filename": "novonameslist"
+  },
+  {
+    "features": [
+      8.810571634741146,
+      4.5184,
+      1.0,
+      0.0,
+      0.0,
+      0.667,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/object_script.Cenario_medieval.Debug",
+    "filename": "object_script.Cenario_medieval.Debug"
+  },
+  {
+    "features": [
+      8.939579214314692,
+      4.2747,
+      1.0,
+      0.0,
+      0.0,
+      0.667,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/object_script.Cenario_medieval.Release",
+    "filename": "object_script.Cenario_medieval.Release"
+  },
+  {
+    "features": [
+      11.805340828416384,
+      4.8385,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/patch.cpp",
+    "filename": "patch.cpp"
+  },
+  {
+    "features": [
+      9.946906274456397,
+      4.873,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/patch.h",
+    "filename": "patch.h"
+  },
+  {
+    "features": [
+      20.908546548666877,
+      4.5151,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/patches.txt",
+    "filename": "patches.txt"
+  },
+  {
+    "features": [
+      17.811343332415028,
+      4.1262,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/patchescor.txt",
+    "filename": "patchescor.txt"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/pordosol",
+    "filename": "pordosol"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.279,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/pordosolconfigfile",
+    "filename": "pordosolconfigfile"
+  },
+  {
+    "features": [
+      7.1799090900149345,
+      3.1899,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/pordosollightsourcelist",
+    "filename": "pordosollightsourcelist"
+  },
+  {
+    "features": [
+      13.14609130463152,
+      2.5712,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/pordosollistas",
+    "filename": "pordosollistas"
+  },
+  {
+    "features": [
+      10.61194694181998,
+      1.3928,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/pordosolnameslist",
+    "filename": "pordosolnameslist"
+  },
+  {
+    "features": [
+      11.3009244909763,
+      4.0948,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/resources.cpp",
+    "filename": "resources.cpp"
+  },
+  {
+    "features": [
+      9.124121311829187,
+      4.9968,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/resources.h",
+    "filename": "resources.h"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/rt",
+    "filename": "rt"
+  },
+  {
+    "features": [
+      6.658211482751795,
+      4.6241,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/rtconfigfile",
+    "filename": "rtconfigfile"
+  },
+  {
+    "features": [
+      6.918863237274595,
+      2.4605,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/rtlightsourcelist",
+    "filename": "rtlightsourcelist"
+  },
+  {
+    "features": [
+      12.508042334429005,
+      0.906,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/rtlistas",
+    "filename": "rtlistas"
+  },
+  {
+    "features": [
+      9.878050912728536,
+      1.2604,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/rtnameslist",
+    "filename": "rtnameslist"
+  },
+  {
+    "features": [
+      10.952013164889486,
+      4.7744,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/SceneElements.h",
+    "filename": "SceneElements.h"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/SceneTeste",
+    "filename": "SceneTeste"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.1939,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/SceneTesteconfigfile",
+    "filename": "SceneTesteconfigfile"
+  },
+  {
+    "features": [
+      7.1799090900149345,
+      1.8382,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/SceneTestelightsourcelist",
+    "filename": "SceneTestelightsourcelist"
+  },
+  {
+    "features": [
+      12.768391118304248,
+      0.9947,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/SceneTestelistas",
+    "filename": "SceneTestelistas"
+  },
+  {
+    "features": [
+      9.878050912728536,
+      1.4369,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/SceneTestenameslist",
+    "filename": "SceneTestenameslist"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Scene_teste",
+    "filename": "Scene_teste"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.1731,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/Scene_testeconfigfile",
+    "filename": "Scene_testeconfigfile"
+  },
+  {
+    "features": [
+      8.154818109052105,
+      2.3675,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Scene_testelightsourcelist",
+    "filename": "Scene_testelightsourcelist"
+  },
+  {
+    "features": [
+      12.768391118304248,
+      0.894,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Scene_testelistas",
+    "filename": "Scene_testelistas"
+  },
+  {
+    "features": [
+      9.878050912728536,
+      1.3128,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/Scene_testenameslist",
+    "filename": "Scene_testenameslist"
+  },
+  {
+    "features": [
+      18.294625235769605,
+      6.2504,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/SDL.dll",
+    "filename": "SDL.dll"
+  },
+  {
+    "features": [
+      9.45532722030456,
+      5.2967,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/sdlwidget.cpp",
+    "filename": "sdlwidget.cpp"
+  },
+  {
+    "features": [
+      8.113742166049189,
+      5.0539,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/sdlwidget.h",
+    "filename": "sdlwidget.h"
+  },
+  {
+    "features": [
+      16.791366414695002,
+      5.6755,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/SDL_draw.dll",
+    "filename": "SDL_draw.dll"
+  },
+  {
+    "features": [
+      15.409424085918632,
+      6.0317,
+      0.0,
+      0.0,
+      1.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/SDL_image.dll",
+    "filename": "SDL_image.dll"
+  },
+  {
+    "features": [
+      14.248001663215703,
+      6.1821,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/SDL_ttf.dll",
+    "filename": "SDL_ttf.dll"
+  },
+  {
+    "features": [
+      6.426264754702098,
+      4.482,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/slider.cpp",
+    "filename": "slider.cpp"
+  },
+  {
+    "features": [
+      8.118941072723507,
+      4.8244,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/slider.h",
+    "filename": "slider.h"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/teste",
+    "filename": "teste"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      4.2678,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/testeconfigfile",
+    "filename": "testeconfigfile"
+  },
+  {
+    "features": [
+      2.321928094887362,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testelightsourcelist",
+    "filename": "testelightsourcelist"
+  },
+  {
+    "features": [
+      12.148794321424335,
+      0.4463,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testelistas",
+    "filename": "testelistas"
+  },
+  {
+    "features": [
+      7.734709620225838,
+      1.2075,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testenameslist",
+    "filename": "testenameslist"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testeScene",
+    "filename": "testeScene"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testeScene2",
+    "filename": "testeScene2"
+  },
+  {
+    "features": [
+      6.658211482751795,
+      4.5629,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/testeScene2configfile",
+    "filename": "testeScene2configfile"
+  },
+  {
+    "features": [
+      6.918863237274595,
+      2.4781,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testeScene2lightsourcelist",
+    "filename": "testeScene2lightsourcelist"
+  },
+  {
+    "features": [
+      12.508042334429005,
+      0.7127,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/testeScene2listas",
+    "filename": "testeScene2listas"
+  },
+  {
+    "features": [
+      9.878050912728536,
+      1.2508,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/testeScene2nameslist",
+    "filename": "testeScene2nameslist"
+  },
+  {
+    "features": [
+      6.658211482751795,
+      4.5439,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testeSceneconfigfile",
+    "filename": "testeSceneconfigfile"
+  },
+  {
+    "features": [
+      6.918863237274595,
+      2.4781,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testeScenelightsourcelist",
+    "filename": "testeScenelightsourcelist"
+  },
+  {
+    "features": [
+      12.508042334429005,
+      0.8764,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testeScenelistas",
+    "filename": "testeScenelistas"
+  },
+  {
+    "features": [
+      9.878050912728536,
+      1.2508,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/testeScenenameslist",
+    "filename": "testeScenenameslist"
+  },
+  {
+    "features": [
+      3.584962500721156,
+      2.914,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/teteste2.txt",
+    "filename": "teteste2.txt"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho",
+    "filename": "trabalho"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho2",
+    "filename": "trabalho2"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.2662,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho2configfile",
+    "filename": "trabalho2configfile"
+  },
+  {
+    "features": [
+      8.154818109052105,
+      3.6027,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho2lightsourcelist",
+    "filename": "trabalho2lightsourcelist"
+  },
+  {
+    "features": [
+      15.409291482224438,
+      3.4183,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho2listas",
+    "filename": "trabalho2listas"
+  },
+  {
+    "features": [
+      13.53393802806932,
+      1.4917,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho2nameslist",
+    "filename": "trabalho2nameslist"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho3",
+    "filename": "trabalho3"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.2748,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho3configfile",
+    "filename": "trabalho3configfile"
+  },
+  {
+    "features": [
+      8.154818109052105,
+      3.6027,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho3lightsourcelist",
+    "filename": "trabalho3lightsourcelist"
+  },
+  {
+    "features": [
+      15.409291482224438,
+      3.4183,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho3listas",
+    "filename": "trabalho3listas"
+  },
+  {
+    "features": [
+      13.53393802806932,
+      1.4917,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho3nameslist",
+    "filename": "trabalho3nameslist"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.1854,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalhoconfigfile",
+    "filename": "trabalhoconfigfile"
+  },
+  {
+    "features": [
+      8.154818109052105,
+      3.6027,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalholightsourcelist",
+    "filename": "trabalholightsourcelist"
+  },
+  {
+    "features": [
+      14.886696838858187,
+      3.395,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalholistas",
+    "filename": "trabalholistas"
+  },
+  {
+    "features": [
+      12.949279579076595,
+      1.5004,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalhonameslist",
+    "filename": "trabalhonameslist"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final",
+    "filename": "trabalho_final"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final02",
+    "filename": "trabalho_final02"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.2407,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho_final02configfile",
+    "filename": "trabalho_final02configfile"
+  },
+  {
+    "features": [
+      7.1799090900149345,
+      3.636,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final02lightsourcelist",
+    "filename": "trabalho_final02lightsourcelist"
+  },
+  {
+    "features": [
+      15.432183008848934,
+      3.3603,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final02listas",
+    "filename": "trabalho_final02listas"
+  },
+  {
+    "features": [
+      13.559018523346786,
+      1.4917,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final02nameslist",
+    "filename": "trabalho_final02nameslist"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho_final2",
+    "filename": "trabalho_final2"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.2629,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho_final2configfile",
+    "filename": "trabalho_final2configfile"
+  },
+  {
+    "features": [
+      7.1799090900149345,
+      3.636,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho_final2lightsourcelist",
+    "filename": "trabalho_final2lightsourcelist"
+  },
+  {
+    "features": [
+      15.432183008848934,
+      3.3583,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final2listas",
+    "filename": "trabalho_final2listas"
+  },
+  {
+    "features": [
+      13.559018523346786,
+      1.4917,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final2nameslist",
+    "filename": "trabalho_final2nameslist"
+  },
+  {
+    "features": [
+      16.296593628704013,
+      3.0615,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final3",
+    "filename": "trabalho_final3"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.2913,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final3configfile",
+    "filename": "trabalho_final3configfile"
+  },
+  {
+    "features": [
+      7.1799090900149345,
+      3.636,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final3lightsourcelist",
+    "filename": "trabalho_final3lightsourcelist"
+  },
+  {
+    "features": [
+      15.409291482224438,
+      3.3583,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final3listas",
+    "filename": "trabalho_final3listas"
+  },
+  {
+    "features": [
+      13.53393802806932,
+      1.4917,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_final3nameslist",
+    "filename": "trabalho_final3nameslist"
+  },
+  {
+    "features": [
+      7.592457037268081,
+      5.1353,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_finalconfigfile",
+    "filename": "trabalho_finalconfigfile"
+  },
+  {
+    "features": [
+      7.1799090900149345,
+      3.636,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_finallightsourcelist",
+    "filename": "trabalho_finallightsourcelist"
+  },
+  {
+    "features": [
+      15.432183008848934,
+      3.3603,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/trabalho_finallistas",
+    "filename": "trabalho_finallistas"
+  },
+  {
+    "features": [
+      13.559018523346786,
+      1.4917,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/trabalho_finalnameslist",
+    "filename": "trabalho_finalnameslist"
+  },
+  {
+    "features": [
+      14.779821932202061,
+      5.2405,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/ui_mainwindow.h",
+    "filename": "ui_mainwindow.h"
+  },
+  {
+    "features": [
+      13.156399144871584,
+      5.0703,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/viewscene.cpp",
+    "filename": "viewscene.cpp"
+  },
+  {
+    "features": [
+      11.283088353024002,
+      4.8169,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/viewscene.h",
+    "filename": "viewscene.h"
+  },
+  {
+    "features": [
+      16.189843858502652,
+      5.9534,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/zlib1.dll",
+    "filename": "zlib1.dll"
+  },
+  {
+    "features": [
+      17.372550524292706,
+      5.7976,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/cbox.o",
+    "filename": "cbox.o"
+  },
+  {
+    "features": [
+      22.560007868401968,
+      5.5274,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/Cenario_medieval.exe",
+    "filename": "Cenario_medieval.exe"
+  },
+  {
+    "features": [
+      17.37441972973552,
+      5.8004,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/debug/combobox.o",
+    "filename": "combobox.o"
+  },
+  {
+    "features": [
+      17.195487556872376,
+      5.6815,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/formfactorscene.o",
+    "filename": "formfactorscene.o"
+  },
+  {
+    "features": [
+      15.746173131285564,
+      5.3433,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/debug/glm.o",
+    "filename": "glm.o"
+  },
+  {
+    "features": [
+      11.024447124040647,
+      3.5257,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/hemicubo.o",
+    "filename": "hemicubo.o"
+  },
+  {
+    "features": [
+      17.18835703160853,
+      5.3405,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/debug/hemiesfera.o",
+    "filename": "hemiesfera.o"
+  },
+  {
+    "features": [
+      18.788335996390604,
+      3.8549,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/debug/interfacegl.o",
+    "filename": "interfacegl.o"
+  },
+  {
+    "features": [
+      13.910361658603122,
+      5.4641,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/debug/lightsource.o",
+    "filename": "lightsource.o"
+  },
+  {
+    "features": [
+      16.817333458375696,
+      5.7836,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/main.o",
+    "filename": "main.o"
+  },
+  {
+    "features": [
+      18.09704449932295,
+      5.6876,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/mainwindow.o",
+    "filename": "mainwindow.o"
+  },
+  {
+    "features": [
+      17.090122760044668,
+      5.1917,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/Map.o",
+    "filename": "Map.o"
+  },
+  {
+    "features": [
+      13.001232245244363,
+      5.0674,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/material.o",
+    "filename": "material.o"
+  },
+  {
+    "features": [
+      11.492854620174748,
+      5.1249,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/moc_cbox.cpp",
+    "filename": "moc_cbox.cpp"
+  },
+  {
+    "features": [
+      17.555982072510222,
+      5.669,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 1,
+    "path": "Cenario_medieval/debug/moc_cbox.o",
+    "filename": "moc_cbox.o"
+  },
+  {
+    "features": [
+      11.324180546618742,
+      5.1159,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/moc_combobox.cpp",
+    "filename": "moc_combobox.cpp"
+  },
+  {
+    "features": [
+      17.55245896933616,
+      5.6786,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 1,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/moc_combobox.o",
+    "filename": "moc_combobox.o"
+  },
+  {
+    "features": [
+      11.214319120800766,
+      5.0233,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/moc_interface.cpp",
+    "filename": "moc_interface.cpp"
+  },
+  {
+    "features": [
+      13.92351319630841,
+      5.0235,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "true_label": 0,
+    "predicted_label": 0,
+    "path": "Cenario_medieval/debug/moc_interfacegl.cpp",
+    "filename": "moc_interfacegl.cpp"
+  }
+]

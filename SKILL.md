@@ -30,7 +30,7 @@ This is the most comprehensive cleanup version. Builds on v2.2 with automated du
 - Sufficient RAM for hashing candidate files (chunked reading keeps memory low)
 
 ## Configuration
-Before running, review or adjust these parameters in `cleanup_skill_v2_4.py`:
+Before running, review or adjust these parameters in `cleanup_skill_v2_5.py`:
 
 | Parameter | Default | Purpose |
 |---|---|---|
@@ -44,6 +44,7 @@ Before running, review or adjust these parameters in `cleanup_skill_v2_4.py`:
 | `DUP_DIRS_VERIFY_CONTENT` | `True` | Verify directories have identical contents before moving duplicates |
 | `DUP_DIRS_HASH_ALGO` | `"md5"` | Hash algorithm for directory content verification |
 | `PROJECT_DUP_THRESHOLD` | `0.50` (50%) | Minimum similarity score to flag a project duplicate group |
+| `THIRD_PARTY_DIRS` | `60+` entries | Third-party dependency directories (npm, pip, composer, CocoaPods, NuGet, Cargo, etc.) — always flagged as junk |
 
 ### Project Detection (Dual-Validation) - same as v2.2
 A directory is a project ONLY if BOTH conditions are met:
@@ -66,6 +67,22 @@ A directory is a project ONLY if BOTH conditions are met:
 - Web-downloaded artifacts: files with formats `.html`, `.htm`, `.css`, `.js`, `.svg`, `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.ico`, `.pdf`, `.txt` that are under `MAX_WEB_SIZE_BYTES` AND match names like `download_*`, `untitled_*`, `image_*`, `screenshot_*`, `temp_*`, `img###`, `pic###`, `photo`, `picture`, `snapshot`, `capture`, `clipboard`, `screen`
 - Man pages: `.3` extension (documentation, not source code)
 - Blender backups: `.blend1` (auto-backup files from Blender)
+
+**Third-party dependency directories** (v2.5+ — always flagged as junk, regardless of project context):
+- **Node.js**: `node_modules`, `bower_components`, `.yarn`, `.pnp`, `.next`, `.nuxt`, `.vite`, `.turbo`, `.nx`, `.parcel-cache`, `.webpack`, `@types`, `typings`, `jspm_packages`
+- **Python**: `.venv`, `env`, `.mypy_cache`, `.ruff_cache`, `.pyre`, `.pytype`, `htmlcov`, `.coverage`, `.hypothesis`, `__pyinstaller`, `pip-wheel-metadata`, `.eggs`, `_skbuild`
+- **PHP/Composer**: `vendor`, `.composer`
+- **Ruby/Bundler**: `gems`, `.bundle`
+- **Go**: `vendor`
+- **Rust/Cargo**: `.cargo`, `registry`, `checkouts`
+- **Java/Maven**: `.m2`, `.ivy2`, `sbt`
+- **.NET/NuGet**: `.nuget`, `packages`
+- **iOS/Swift**: `Pods`, `Carthage`, `.build`, `DerivedData`
+- **Dart/Flutter**: `.dart_tool`, `.pub-cache`, `.flutter-plugins`, `.flutter-plugins-dependencies`
+- **Elixir**: `_build`, `deps`, `.hex`, `.mix`, `.elixir_ls`
+- **Version managers**: `.nvm`, `.pyenv`, `.rbenv`, `.tool-versions`, `.direnv`
+- **Editor swap files**: `.swp`, `.swo`, `.swx` (new `SWAP_EXTS` category)
+- **macOS/XDG trash**: `.Trash`, `.local/share/Trash`
 
 **Project junk** (applied only inside detected projects):
 - Directories: `bin`, `obj`, `build`, `dist`, `target`, `out`, `release`, `debug`, `static`, `output`, `generated`, `.vs`, `.idea`, `.clion`, `__pycache__`, `.tox`, `.pytest_cache`, `.gradle`, `.cache`, `node_modules`, `venv`, `blendcache_*`, `.vscode`
@@ -155,6 +172,55 @@ Group "shared-ui" (similarity: 55%)
 | Mono-repos | Each project root with its own markers is fingerprinted independently |
 | Template-based projects | 50% threshold allows them through without false positives on truly distinct projects |
 
+## Third-Party Library Analysis & Recommendations
+
+### Identified Third-Party Libraries (from backup scan)
+
+The following third-party libraries and dependencies were identified in your backup. These are **re-downloadable** and can be safely cleaned:
+
+| Library | Version/Notes | Recommendation |
+|---|---|---|
+| **SDL 1.2.13** | Legacy library (1999-era) | ✅ Can be re-downloaded from libsdl.org |
+| **GLM** | Small math library | ✅ Can be re-downloaded from github.com/g-truc/glm |
+| **FlatGraph examples** | Example files, not main application | ✅ Clean — just examples |
+
+### User Code — Keep These
+
+| Category | Projects | Reason |
+|---|---|---|
+| **Game projects** | `Bravura`, `Cenario_Medieval`, `Editor`, `Motor`, `Labirinto` | Your original work, significant assets |
+| **Academic exercises** | `ex01`–`ex10`, assignments | May have academic value |
+| **Hardware projects** | `Transmissão` | Unique hardware-specific work |
+
+### Duplicate Projects to Clean
+
+| Project | Occurrences | Recommendation |
+|---|---|---|
+| `Cenario_Medieval` | Multiple copies | Keep one, clean others |
+| `Bravura` | Multiple copies | Keep one, clean others |
+| `Labirinto` | Multiple copies | Keep one, clean others |
+
+### Small Tutorial Files
+
+- Files under **1 KB** are typically tutorial snippets or example code
+- Can be **re-created from online sources** if needed
+- Consider cleaning these to reduce backup size
+
+### Execution Strategy for Third-Party
+
+When running `--execute`, third-party dependency directories are:
+1. **Always flagged as junk** (regardless of project context)
+2. **Moved to Trash** (not deleted)
+3. **One copy kept** for file duplicates (same logic as regular files)
+4. **Reported in scan output** with category `"third_party_dependency"`
+
+This ensures you clean out:
+- `node_modules/` — npm packages (can be reinstalled)
+- `vendor/` — Composer/Go packages (can be re-downloaded)
+- `Pods/` — CocoaPods dependencies (can be reinstalled)
+- `.m2/` — Maven local repository (can be re-downloaded)
+- And 60+ other ecosystem-specific directories
+
 ## Automated Duplicate Handling (v2.2 features, unchanged)
 
 ### File Duplicate Handling
@@ -229,7 +295,7 @@ For each duplicate directory group:
 
 ### Step 1 - Scan and Report (always first)
 ```bash
-python cleanup_skill_v2_4.py --source /path/to/backup
+python cleanup_skill_v2_5.py --source /path/to/backup
 ```
 - Performs a full scan and categorizes everything:
   - **Junk to move**: files/dirs matching junk patterns
@@ -244,7 +310,7 @@ python cleanup_skill_v2_4.py --source /path/to/backup
 
 ### Step 2 - Execute
 ```bash
-python cleanup_skill_v2_4.py --source /path/to/backup --trash /path/to/trash --execute
+python cleanup_skill_v2_5.py --source /path/to/backup --trash /path/to/trash --execute
 ```
 Actions performed in order:
 1. Move junk files to Trash (same as v2.2)
@@ -287,6 +353,7 @@ find <source> -perm -o-w         # check for read-only project dirs
 - Increase or decrease `PROJECT_DEPTH_LIMIT` (3–10 range recommended)
 - Add new project markers to `PROJECT_MARKERS` for your toolchain
 - Adjust `MAX_WEB_SIZE_BYTES` based on your backup's typical file sizes
+- **Third-party directories**: Edit `THIRD_PARTY_DIRS` to add/remove ecosystem-specific directories
 - **Disable `DUP_DIRS_VERIFY_CONTENT`** if you're confident about directory signatures and want faster execution
 - **Use `sha256` instead of `md5`** if you want stronger collision resistance at the cost of speed
 - **Adjust `PROJECT_DUP_THRESHOLD`** (0.30–0.70 recommended) — lower for template-based projects, higher for stricter matching
