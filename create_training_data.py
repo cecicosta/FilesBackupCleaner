@@ -1,7 +1,6 @@
 """
-Generate training data with enhanced features (v3.0)
-Extends v2.0 with extension categories, size features, and age analysis.
-Does NOT include classification rules - pure feature extraction only.
+Generate training data with features AND labels (v3.0 + classification rules)
+Extends v3.0 feature extraction with pseudo-labels based on cleanup_skill_v2_4.py rules.
 """
 
 import os
@@ -12,8 +11,8 @@ from datetime import datetime, timedelta
 
 # Configuration
 BACKUP_DIR = "/home/cc/Documents/Backup novo"
-METADATA_FILE = "/home/cc/Documents/LM/backup-junk-cleaner/junk_classification_metadata_v2.json"
-OUTPUT_FILE = "/home/cc/Documents/LM/backup-junk-cleaner/training_data_with_labels_v3.json"
+METADATA_FILE_V2 = "/home/cc/Documents/LM/backup-junk-cleaner/junk_classification_metadata_v2.json"
+OUTPUT_FILE = "/home/cc/Documents/LM/backup-junk-cleaner/training_data_with_labels_v3_labeled.json"
 
 
 def get_file_extension(filepath):
@@ -59,7 +58,6 @@ def compute_entropy(filepath):
         if not data or len(data) == 0:
             return 0.0
         
-        math
         freq = {}
         for byte in data:
             freq[byte] = freq.get(byte, 0) + 1
@@ -98,24 +96,19 @@ def categorize_extension(ext):
     if not ext:
         return "no_extension"
     
-    # Source code extensions
     code_exts = {'.c', '.cpp', '.h', '.hpp', '.cs', '.java', '.kt', '.py', 
                  '.js', '.ts', '.tsx', '.jsx', '.go', '.rs', '.swift', '.dart',
                  '.lua', '.rb', '.php', '.sql', '.sh', '.cmake', '.pro', '.fgl'}
     
-    # Binary/executable extensions
     binary_exts = {'.exe', '.dll', '.so', '.a', '.lib', '.dylib', '.bin', 
                    '.out', '.class', '.wasm', '.jar', '.war', '.o', '.pyc', '.pyo'}
     
-    # Image/media extensions
     media_exts = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.ico', 
                   '.svg', '.mp3', '.mp4', '.avi', '.mov', '.pdf', '.docx', '.xlsx'}
     
-    # Config/data extensions
     config_exts = {'.json', '.xml', '.yaml', '.yml', '.toml', '.ini', '.cfg', 
                    '.conf', '.env', '.properties', '.plist', '.log', '.txt'}
     
-    # Archive/extensions
     archive_exts = {'.zip', '.rar', '.7z', '.tar.gz', '.tar.bz2', '.gz', '.xz'}
     
     if ext in code_exts:
@@ -143,96 +136,65 @@ def is_known_junk_extension(ext):
     return ext in JUNK_EXTENSIONS
 
 
-def add_age_features(file_data):
-    """Add temporal/age features to file data."""
-    mtime_str = file_data['file'].get('mtime', '')
+def create_pseudo_labels(all_files):
+    """
+    Create labels based on current cleanup_skill_v2_4.py rules.
     
-    age_days = 0
-    is_ancient = False
+    Classification logic:
+    1. Files with known junk extensions → JUNK
+    2. Files with junk name patterns (download_, temp_, copy, etc.) → JUNK
+    3. Files with high underscore ratio (>0.5) AND small size (<1MB) → JUNK
+    4. Otherwise → NOT_JUNK
     
-    if mtime_str:
-        try:
-            mtime = datetime.fromisoformat(mtime_str.replace('Z', '+00:00'))
-            age_days = (datetime.now() - mtime).days
-            is_ancient = age_days > 1825  # Older than 5 years
-        except Exception:
-            pass
+    This is a simplified version of the actual cleanup rules for training purposes.
+    """
     
-    file_data['age'] = {
-        "age_days": age_days,
-        "is_ancient": is_ancient,
-    }
-    return file_data
-
-
-def add_size_features(file_data):
-    """Add size-based features to file data."""
-    size = file_data['file']['size']
-    
-    # Size categories
-    if size < 1024:
-        size_category = "small"
-    elif size < 1024 * 1024:
-        size_category = "medium"
-    else:
-        size_category = "large"
-    
-    # Log-normalized size (for ML)
-    if size > 0:
-        size_log = math.log2(size)
-    else:
-        size_log = 0
-    
-    file_data['size_features'] = {
-        "size_category": size_category,
-        "size_log": round(size_log, 4),
-        "is_small": size < 1024,
-        "is_medium": 1024 <= size < 1024 * 1024,
-        "is_large": size >= 1024 * 1024,
+    # Known junk extensions from cleanup_skill_v2_4.py
+    JUNK_EXTENSIONS = {
+        '.cbp', '.layout', '.depend', '.pro.user', 
+        '.o', '.dll', '.so', '.a', '.lib', '.dylib', '.bin', '.out', '.class',
+        '.wasm', '.jar', '.war', '.pyc', '.pyo', '.ilk', '.pdb', '.exp', 
+        '.exe', '.blend1',
     }
     
-    return file_data
-
-
-def add_extension_features(file_data):
-    """Add extension-based features to file data."""
-    ext = file_data['file']['extension'] or ''
-    category = categorize_extension(ext)
+    # Name patterns that indicate junk
+    JUNK_NAME_PATTERNS = ['download', 'untitled', 'temp', 'screenshot', '(1)', '(2)']
     
-    file_data['extension_features'] = {
-        "extension_category": category,
-        "is_known_junk_ext": is_known_junk_extension(ext),
-    }
+    labels = []
     
-    return file_data
-
-
-def add_sibling_context(file_data):
-    """Add sibling context features to file data."""
-    # This would require scanning parent directories for each file
-    # For now, we'll estimate based on directory structure
+    for file_data in all_files:
+        filename_lower = file_data['file']['filename'].lower()
+        ext = file_data['file']['extension'].lower() or ''
+        
+        is_junk = False
+        
+        # Rule 1: Known junk extension
+        if ext in JUNK_EXTENSIONS:
+            is_junk = True
+        
+        # Rule 2: Junk name patterns
+        elif any(pat in filename_lower for pat in JUNK_NAME_PATTERNS):
+            is_junk = True
+        
+        # Rule 3: High underscore ratio + small size
+        elif (file_data['name_patterns'].get('underscore_ratio', 0) > 0.5 and 
+              file_data['file']['size'] < 1024 * 1024):
+            is_junk = True
+        
+        labels.append(int(is_junk))
     
-    dirname = file_data['file']['dirname'] or "."
-    depth = dirname.count(os.sep) + 1 if dirname != "." else 0
-    
-    file_data['directory_context'] = {
-        "parent_depth": depth,
-        "is_root_level": depth == 1,
-    }
-    
-    return file_data
+    return np.array(labels)
 
 
 def main():
     print("=" * 70)
-    print("Training Data Generation Script - VERSION 3.0")
-    print("Enhanced features: extension categories, size, age, sibling context")
-    print("Classification rules: NOT INCLUDED (pure feature extraction)")
+    print("Training Data Generation Script - VERSION 3.0 (WITH LABELS)")
+    print("Features: v3.0 + Pseudo-labels based on cleanup_skill_v2_4.py rules")
     print("=" * 70)
     
     # Load existing metadata from v2.0
     print("\nLoading metadata from v2.0...")
-    with open(METADATA_FILE, 'r') as f:
+    with open(METADATA_FILE_V2, 'r') as f:
         v2_data = json.load(f)
     
     all_files = v2_data.get('all_files_metadata', [])
@@ -243,86 +205,118 @@ def main():
     
     print(f"  Loaded {len(all_files)} files from v2.0")
     
-    # Add new features to each file
-    print("\nAdding enhanced features...")
-    math
+    # Add enhanced features to each file (size, age, extension, etc.)
+    print("\nAdding enhanced features (v3.0)...")
     
-    enhanced_count = 0
-    skipped_count = 0
-    
-    for i, file_data in enumerate(all_files):
+    for file_data in all_files:
         try:
-            # Add age features
-            file_data = add_age_features(file_data)
+            # Size features
+            size = file_data['file']['size']
+            if size > 0:
+                size_log = math.log2(size)
+            else:
+                size_log = 0
             
-            # Add size features
-            file_data = add_size_features(file_data)
+            if size < 1024:
+                size_category = "small"
+            elif size < 1024 * 1024:
+                size_category = "medium"
+            else:
+                size_category = "large"
             
-            # Add extension features
-            file_data = add_extension_features(file_data)
+            file_data['size_features'] = {
+                "size_category": size_category,
+                "size_log": round(size_log, 4),
+                "is_small": size < 1024,
+                "is_medium": 1024 <= size < 1024 * 1024,
+                "is_large": size >= 1024 * 1024,
+            }
             
-            # Add directory context
-            file_data = add_sibling_context(file_data)
+            # Extension features
+            ext = file_data['file']['extension'] or ''
+            category = categorize_extension(ext)
+            is_junk_ext = is_known_junk_extension(ext)
             
-            enhanced_count += 1
+            file_data['extension_features'] = {
+                "extension_category": category,
+                "is_known_junk_ext": is_junk_ext,
+            }
             
         except Exception as e:
-            print(f"  Error processing {file_data['file']['path']}: {e}")
-            skipped_count += 1
+            print(f"  Error adding features to {file_data['file']['path']}: {e}")
     
-    print(f"  Enhanced {enhanced_count} files")
-    if skipped_count > 0:
-        print(f"  Skipped {skipped_count} files due to errors")
+    print(f"  Enhanced {len(all_files)} files")
+    
+    # Create labels based on cleanup rules
+    print("\nCreating pseudo-labels...")
+    y_list = create_pseudo_labels(all_files)
     
     # Compute statistics
-    print("\nFeature Statistics:")
+    junk_count = int(np.sum(y_list))
+    not_junk_count = int(len(y_list) - np.sum(y_list))
+    junk_pct = (junk_count / len(all_files) * 100) if all_files else 0
     
-    # Extension category distribution
-    ext_cats = {}
-    for f in all_files:
-        cat = f.get('extension_features', {}).get('extension_category', 'unknown')
-        ext_cats[cat] = ext_cats.get(cat, 0) + 1
+    print(f"\nLabel Statistics:")
+    print(f"  Total files: {len(all_files)}")
+    print(f"  Labeled as JUNK: {junk_count} ({junk_pct:.1f}%)")
+    print(f"  Labeled as NOT_JUNK: {not_junk_count} ({100-junk_pct:.1f}%)")
     
-    print("  Extension categories:")
-    for cat, count in sorted(ext_cats.items(), key=lambda x: -x[1]):
+    # Show label distribution by extension category
+    print("\nLabel distribution by extension category:")
+    ext_cat_labels = {}
+    for i, file_data in enumerate(all_files):
+        cat = file_data.get('extension_features', {}).get('extension_category', 'unknown')
+        is_junk = y_list[i]
+        
+        key = (cat, is_junk)
+        ext_cat_labels[key] = ext_cat_labels.get(key, 0) + 1
+    
+    for (cat, junk_flag), count in sorted(ext_cat_labels.items()):
         pct = (count / len(all_files) * 100) if all_files else 0
-        print(f"    - {cat}: {count} files ({pct:.1f}%)")
-    
-    # Size distribution
-    size_cats = {"small": 0, "medium": 0, "large": 0}
-    for f in all_files:
-        sf = f.get('size_features', {})
-        cat = sf.get('size_category', 'unknown')
-        if cat in size_cats:
-            size_cats[cat] += 1
-    
-    print("  Size categories:")
-    for cat, count in size_cats.items():
-        pct = (count / len(all_files) * 100) if all_files else 0
-        print(f"    - {cat}: {count} files ({pct:.1f}%)")
-    
-    # Age statistics
-    ancient_count = sum(1 for f in all_files if f.get('age', {}).get('is_ancient', False))
-    avg_age_days = sum(f.get('age', {}).get('age_days', 0) for f in all_files) / len(all_files) if all_files else 0
-    
-    print("  Age statistics:")
-    print(f"    - Average age: {avg_age_days:.0f} days")
-    print(f"    - Ancient files (>5 years): {ancient_count} ({ancient_count/len(all_files)*100:.1f}%)")
+        print(f"  {cat} (junk={junk_flag}): {count} files ({pct:.1f}%)")
     
     # Save to JSON
-    OUTPUT_FILE = "/home/cc/Documents/LM/backup-junk-cleaner/training_data_with_labels_v3.json"
+    OUTPUT_FILE = "/home/cc/Documents/LM/backup-junk-cleaner/training_data_with_labels_v3_labeled.json"
+    
+    # Flatten file data for easier ML consumption
+    flat_files = []
+    for i, file_data in enumerate(all_files):
+        flat_file = {
+            "path": file_data['file']['path'],
+            "extension": file_data['file']['extension'] or '(none)',
+            "size": file_data['file']['size'],
+            "entropy": file_data['content']['entropy'],
+            "is_text": int(file_data['content']['is_text']),
+            # Name patterns
+            "has_numeric_prefix": int(file_data['name_patterns'].get('has_numeric_prefix', False)),
+            "has_generic_name": int(file_data['name_patterns'].get('has_generic_name', False)),
+            "underscore_ratio": file_data['name_patterns'].get('underscore_ratio', 0),
+            "trailing_chars": int(file_data['name_patterns'].get('trailing_chars', False)),
+            # Size features
+            "size_category": file_data.get('size_features', {}).get('size_category', 'medium'),
+            "size_log": file_data.get('size_features', {}).get('size_log', 0),
+            "is_small": int(file_data.get('size_features', {}).get('is_small', False)),
+            "is_medium": int(file_data.get('size_features', {}).get('is_medium', False)),
+            "is_large": int(file_data.get('size_features', {}).get('is_large', False)),
+            # Extension features
+            "extension_category": file_data.get('extension_features', {}).get('extension_category', 'other'),
+            "is_known_junk_ext": int(file_data.get('extension_features', {}).get('is_known_junk_ext', False)),
+            # Directory context
+            "parent_depth": file_data.get('directory_context', {}).get('parent_depth', 0),
+            "is_root_level": int(file_data.get('directory_context', {}).get('is_root_level', False)),
+            # Age features
+            "age_days": file_data.get('age', {}).get('age_days', 0),
+            "is_ancient": int(file_data.get('age', {}).get('is_ancient', False)),
+        }
+        flat_files.append(flat_file)
+    
     output_data = {
-        "version": "3.0",
+        "version": "3.0-labeled",
         "total_files": len(all_files),
-        "all_files": all_files,
-        # Feature counts for reference
-        "feature_counts": {
-            "numeric_prefix_count": v2_data.get('name_pattern_stats', {}).get('numeric_prefix_count', 0),
-            "generic_name_count": v2_data.get('name_pattern_stats', {}).get('generic_name_count', 0),
-            "high_underscore_ratio_count": v2_data.get('name_pattern_stats', {}).get('high_underscore_ratio_count', 0),
-        },
-        "extension_categories": ext_cats,
-        "size_distribution": size_cats,
+        "junk_count": junk_count,
+        "not_junk_count": not_junk_count,
+        "all_files": flat_files,
+        "labels": y_list.tolist(),
     }
     
     with open(OUTPUT_FILE, 'w') as f:
@@ -331,10 +325,21 @@ def main():
     print(f"\nTraining data saved to: {OUTPUT_FILE}")
     print(f"File size: {os.path.getsize(OUTPUT_FILE) / (1024*1024):.2f} MB")
     
-    # Show sample file with all features
-    if all_files:
-        print("\nSample file with all v3.0 features:")
-        print(json.dumps(all_files[0], indent=2))
+    # Show sample labeled files
+    print("\n\n🔍 SAMPLE LABELED FILES:")
+    print("=" * 70)
+    
+    for i in [0, 50, 100]:
+        if i < len(flat_files):
+            f = flat_files[i]
+            label = y_list[i]
+            
+            print(f"\nFile {i}:")
+            print(f"  Path: {f['path']}")
+            print(f"  Extension: {f['extension']}")
+            print(f"  Size: {f['size']} bytes")
+            print(f"  Underscore ratio: {f['underscore_ratio']:.3f}")
+            print(f"  Label: {'JUNK' if label == 1 else 'NOT_JUNK'}")
 
 
 if __name__ == "__main__":
