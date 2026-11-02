@@ -1,0 +1,124 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run generate_junk_metadata.py",
+            "type": "python",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "args": ["${workspaceFolder}/generate_junk_metadata.py"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Run create_training_data.py",
+            "type": "python",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "args": ["${workspaceFolder}/create_training_data.py"],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Run train_model.py",
+            "type": "python",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "args": ["${workspaceFolder}/train_model.py"],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Run classify_backup.py",
+            "type": "python",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "args": ["${workspaceFolder}/classify_backup.py"],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Run All Pipeline (Sequential)",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/bin/python",
+            "args": [
+                "${workspaceFolder}/generate_junk_metadata.py",
+                "${workspaceFolder}/create_training_data.py",
+                "${workspaceFolder}/train_model.py"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Run Full Pipeline (With Classification)",
+            "type": "shell",
+            "command": "${workspaceFolder}/.venv/bin/python",
+            "args": [
+                "${workspaceFolder}/generate_junk_metadata.py",
+                "${workspaceFolder}/create_training_data.py",
+                "${workspaceFolder}/train_model.py",
+                "${workspaceFolder}/classify_backup.py"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        }
+    ]
+}

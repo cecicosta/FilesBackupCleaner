@@ -1,0 +1,45 @@
+{
+    "version": 0.2,
+    "configurations": [
+        {
+            "name": "Python: generate_junk_metadata.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/generate_junk_metadata.py",
+            "console": "internalConsole",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: create_training_data.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/create_training_data.py",
+            "console": "internalConsole",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: train_model.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/train_model.py",
+            "console": "internalConsole",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: classify_backup.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/classify_backup.py",
+            "console": "internalConsole",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Run File",
+            "type": "python",
+            "request": "launch",
+            "currentModule": true,
+            "console": "internalConsole",
+            "justMyCode": true
+        }
+    ]
+}
